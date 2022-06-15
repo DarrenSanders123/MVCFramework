@@ -9,7 +9,8 @@ class Products extends Controller
         $this->productModel = $this->model('Products');
     }
 
-    public function index() {
+    public function index()
+    {
         $data = [
             'title' => 'Products',
             'products' => $this->productModel->getProducts()
@@ -17,5 +18,4 @@ class Products extends Controller
 
         $this->view('products/index', $data);
     }
-
 }
