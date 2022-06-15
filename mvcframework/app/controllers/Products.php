@@ -2,7 +2,8 @@
 
 class Products extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data = [
             'title' => 'Products'
         ];
