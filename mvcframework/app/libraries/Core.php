@@ -45,12 +45,17 @@
       call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
     }
 
+      /**
+       * get the url from get and format it, return index if no url is given.
+       * @return false|string[]/
+       */
     public function getUrl(){
       if(isset($_GET['url'])){
         $url = rtrim($_GET['url'], '/');
         $url = filter_var($url, FILTER_SANITIZE_URL);
-        $url = explode('/', $url);
-        return $url;
+          return explode('/', $url);
+      } else {
+          return array('index');
       }
     }
   }
