@@ -36,7 +36,6 @@ class ProductsModel
 
     public function updateProduct($data): string|bool
     {
-
     }
 
     /**
