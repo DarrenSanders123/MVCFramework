@@ -1,4 +1,5 @@
 <?php
+
 define("APP_ROOT", dirname(dirname(__FILE__)));
 //Database params
 const DB_HOST = 'localhost'; //Add your db host
@@ -10,5 +11,3 @@ const URL_ROOT = 'https://mvcframework.nl/';
 const SITE_NAME = 'MVC Framework';
 
 //APPROOT
-
-

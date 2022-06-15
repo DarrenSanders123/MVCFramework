@@ -1,9 +1,12 @@
 <?php
-    class User {
+
+    class User
+    {
         private $db;
 
-        public function __construct() {
-            $this->db = new Database;
+        public function __construct()
+        {
+            $this->db = new Database();
         }
 
         /* Test (database and table needs to exist before this works)
