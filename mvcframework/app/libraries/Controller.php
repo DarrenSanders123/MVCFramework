@@ -1,12 +1,15 @@
 <?php
+
     //Load the model and the view
-    class Controller {
+    class Controller
+    {
         /**
          * load a model
          * @param $model
          * @return mixed
          */
-        public function model($model) {
+        public function model($model)
+        {
             //Require model file
             require_once '../app/models/' . $model . '.php';
             //Instantiate model
@@ -21,7 +24,8 @@
          * @return void
          * display a view
          */
-        public function view($view, $data = []) {
+        public function view($view, $data = [])
+        {
             if (file_exists('../app/views/' . $view . '.php')) {
                 require_once '../app/views/' . $view . '.php';
             } else {
