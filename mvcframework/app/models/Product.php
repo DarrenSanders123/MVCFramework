@@ -4,5 +4,4 @@ namespace Models;
 
 class Product
 {
-
 }
