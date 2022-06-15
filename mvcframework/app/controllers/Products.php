@@ -9,7 +9,8 @@ class Products extends Controller
         $this->productModel = $this->model('ProductsModel');
     }
 
-    public function index() {
+    public function index()
+    {
         $productsFormatted = "";
         $products = $this->productModel->getProducts($_GET['page'] ?? '1');
 
@@ -45,11 +46,11 @@ class Products extends Controller
         $this->view('products/index', $data);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $result = $this->productModel->deleteProduct($id);
         if ($result) {
             header('LOCATION: /products');
         }
     }
-
 }
