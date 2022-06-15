@@ -7,3 +7,4 @@ foreach ($data['users'] as $user) {
 */
 ?>
 HOME PAGE
+<a href="<?php echo URL_ROOT . 'productsController'?>">Countries</a>

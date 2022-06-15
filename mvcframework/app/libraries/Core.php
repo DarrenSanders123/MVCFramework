@@ -14,7 +14,7 @@ class Core
 
     public function __construct()
     {
-        //print_r($this->getUrl());
+//        print_r($this->getUrl());
 
         $url = $this->getUrl();
 
@@ -60,7 +60,7 @@ class Core
             $url = filter_var($url, FILTER_SANITIZE_URL);
             return explode('/', $url);
         } else {
-            return array('index');
+            return array('pages', 'index');
         }
     }
 }
