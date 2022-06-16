@@ -1,4 +1,5 @@
 <?php
+
 //Require libraries from folder libraries
 use eftec\ValidationOne;
 
