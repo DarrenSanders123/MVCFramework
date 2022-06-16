@@ -21,7 +21,6 @@ class Database
 
     public function __construct()
     {
-
         $this->isLocalHost = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 
         if ($this->isLocalHost) {
@@ -234,5 +233,4 @@ class Database
     {
         return $this->stmt->debugDumpParams();
     }
-
 }
