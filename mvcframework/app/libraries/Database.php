@@ -13,7 +13,6 @@ class Database
     private PDOStatement $stmt;
 
     private mixed $bindArr;
-    private bool $isLocalHost;
 
     /**
      * The constructor is where the database connection is made.
@@ -21,20 +20,10 @@ class Database
 
     public function __construct()
     {
-
-        $this->isLocalHost = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
-
-        if ($this->isLocalHost) {
-            $this->host = "localhost";
-            $this->user = "root";
-            $this->pass = "";
-            $this->dbName = "mvcframework";
-        } else {
-            $this->host = "localhost";
-            $this->user = "u620206215_team";
-            $this->pass = "/5zKy?BsZSQR";
-            $this->dbName = "u620206215_restaurant";
-        }
+        $this->host = "localhost";
+        $this->user = "root";
+        $this->pass = "";
+        $this->dbName = "mvcframework";
 
         //dsn for mysql
         $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->dbName;

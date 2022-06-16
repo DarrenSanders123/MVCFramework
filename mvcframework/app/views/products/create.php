@@ -29,4 +29,6 @@
     <span style="color: red; font-size: small"><?php echo getVal()->getMessageId('category')->firstErrorOrWarning(); ?></span>
     <br>
     <button type="submit">Create</button>
+
+        <?=getVal('product_create_')->messageList->get('complete')->firstSuccess(); ?>
 </form>

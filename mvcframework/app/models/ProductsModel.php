@@ -69,6 +69,7 @@ class ProductsModel
             $this->databaseObj->bind(':ProductName', $data['productName']);
             $this->databaseObj->bind(':CategoryId', (int)$data['category']);
             $this->databaseObj->execute();
+
             return true;
         } catch (PDOException) {
             return false;
