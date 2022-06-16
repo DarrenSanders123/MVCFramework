@@ -12,7 +12,8 @@ class ProductsModel
         $this->databaseObj = new \Database();
     }
 
-    public function getCategories(): array {
+    public function getCategories(): array
+    {
         $this->databaseObj->query('SELECT * FROM category');
         return $this->databaseObj->resultSet();
     }
@@ -45,7 +46,6 @@ class ProductsModel
 
     public function updateProduct($data): string|bool
     {
-
     }
 
     /**
