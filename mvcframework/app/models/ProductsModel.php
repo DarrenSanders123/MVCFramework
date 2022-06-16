@@ -12,8 +12,14 @@ class ProductsModel
         $this->databaseObj = new \Database();
     }
 
+    public function getCategories(): array {
+        $this->databaseObj->query('SELECT * FROM category');
+        return $this->databaseObj->resultSet();
+    }
+
     /**
      * return all the products from the database
+     * @param $page
      * @return array
      */
     public function getProducts($page): array
@@ -43,6 +49,34 @@ class ProductsModel
     }
 
     /**
+     * Create a product with the given data.
+     * @param $data
+     * @return bool
+     */
+    public function createProduct($data): bool
+    {
+        try {
+            $this->databaseObj->query(/** @lang MySQL */ '
+                START TRANSACTION; 
+                INSERT INTO price VALUES (null, :Price, default, default);
+                set @priceId := last_insert_id();
+
+                INSERT INTO products VALUES (null, :ProductName, @priceId, :CategoryId, default, default);
+                COMMIT;
+        ');
+
+            $this->databaseObj->bind(':Price', (float)$data['price']);
+            $this->databaseObj->bind(':ProductName', $data['productName']);
+            $this->databaseObj->bind(':CategoryId', (int)$data['category']);
+            $this->databaseObj->execute();
+            return true;
+        } catch (PDOException) {
+            return false;
+        }
+    }
+
+
+    /**
      * delete the product and price connected with it with the given id
      * @param $id
      * @return bool
@@ -54,6 +88,7 @@ class ProductsModel
             $this->databaseObj->query("SELECT ProductPriceId FROM products WHERE ProductId = :id");
             $this->databaseObj->bind(':id', $id);
 
+            // cast price_id from select query to this value.
             $PriceId = $this->databaseObj->single()->ProductPriceId;
 
             $this->databaseObj->query('DELETE FROM products WHERE ProductId = :id');
