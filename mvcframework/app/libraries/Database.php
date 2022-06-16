@@ -2,14 +2,14 @@
 
 class Database
 {
-    private $dbHost = DB_HOST;
-    private $dbUser = DB_USER;
-    private $dbPass = DB_PASS;
-    private $dbName = DB_NAME;
+    private string $dbHost = DB_HOST;
+    private string $dbUser = DB_USER;
+    private string $dbPass = DB_PASS;
+    private string $dbName = DB_NAME;
 
-    private $statement;
-    private $dbHandler;
-    private $error;
+    private mixed $statement;
+    private mixed $dbHandler;
+    private mixed $error;
 
     public function __construct()
     {

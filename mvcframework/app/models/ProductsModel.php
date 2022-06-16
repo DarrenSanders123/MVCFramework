@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Model to talk with the database for products
+ */
 class ProductsModel
 {
     private mixed $databaseObj;

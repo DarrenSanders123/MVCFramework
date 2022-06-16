@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Controller to manage the product pages
+ */
 class Products extends Controller
 {
     public mixed $productModel;
