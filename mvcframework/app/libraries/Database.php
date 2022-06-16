@@ -20,10 +20,10 @@ class Database
 
     public function __construct()
     {
-        $this->host = "localhost";
-        $this->user = "root";
-        $this->pass = "";
-        $this->dbName = "mvcframework";
+        $this->host = DB_HOST;
+        $this->user = DB_USER;
+        $this->pass = DB_PASS;
+        $this->dbName = DB_NAME;
 
         //dsn for mysql
         $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->dbName;
