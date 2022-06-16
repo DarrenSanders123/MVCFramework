@@ -65,7 +65,8 @@ class ProductsModel
             $this->databaseObj->execute();
             return true;
         } catch (PDOException $e) {
-            die(print_r($e));
+            error_log('Error with deleting product: \n ' . $e, LOG_CRIT);
+            return false;
         }
     }
 }
