@@ -142,22 +142,13 @@ class Products extends Controller
                 }
             }
         } else {
-            $formattedCategory = [];
-
-            foreach ($this->productModel->getCategories() as $category) {
-                $formattedCategory[] = $category->CategoryId;
-            }
-
             $product = $this->productModel->getProduct($id);
 
             $data += ['productName' => $product->ProductName];
             $data += ['productId' => $product->ProductId];
             $data += ['price' => $product->Price];
             $data += ['category' => $product->Category];
-
-
         }
-
 
         $this->view('products/update', $data);
     }
