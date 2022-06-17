@@ -18,6 +18,29 @@ class ProductsModel
         return $this->databaseObj->resultSet();
     }
 
+    public function getProduct($id): stdClass|bool
+    {
+        try {
+            $this->databaseObj->query('
+        SELECT 
+            products.ProductId,
+            products.ProductName,
+            p.Price,
+            c.CategoryId as Category
+        FROM products
+            INNER JOIN price p on ProductPriceId = p.PriceId
+            INNER JOIN category c on ProductCategoryId = c.CategoryId 
+        WHERE ProductId = :ProductId;
+        ');
+            $this->databaseObj->bind(':ProductId', $id);
+
+            return $this->databaseObj->single();
+        } catch (PDOException $exception) {
+            getLog('db')->error('Message: ' . $exception->getMessage());
+            return false;
+        }
+    }
+
     /**
      * return all the products from the database
      * @param $page
@@ -60,12 +83,14 @@ class ProductsModel
             $this->databaseObj->query(/** @lang MySQL */ '
                 START TRANSACTION;
                 UPDATE products 
-                INNER JOIN price p on products.ProductPriceId = p.PriceId
-                SET ProductName = :ProductName, ProductCategoryId = :CategoryId, p.Price = :Price;
+                    INNER JOIN price p on products.ProductPriceId = p.PriceId
+                SET ProductName = :ProductName, ProductCategoryId = :CategoryId, p.Price = :Price
+                    WHERE products.ProductId = :ProductId;
                 COMMIT;
             ');
 
             $this->databaseObj->bind(':ProductName', $data['productName']);
+            $this->databaseObj->bind(':ProductId', $data['productId']);
             $this->databaseObj->bind(':CategoryId', $data['category']);
             $this->databaseObj->bind(':Price', $data['price']);
 

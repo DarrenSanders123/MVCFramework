@@ -1,7 +1,5 @@
 <?php
 
-use eftec\ValidationOne;
-
 /**
  * Controller to manage the product pages
  */
@@ -95,6 +93,73 @@ class Products extends Controller
         }
 
         $this->view('products/create', $data);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'categories' => $this->productModel->getCategories()
+        ];
+
+        if (!empty($_POST)) {
+            $formattedCategory = [];
+
+            foreach ($this->productModel->getCategories() as $category) {
+                $formattedCategory[] = $category->CategoryId;
+            }
+
+            $productName = getVal('product_update_')
+                ->type('string')
+                ->condition("minlen", "Product name has to be at least 3 characters long.", 3)
+                ->condition("maxlen", "Product name cant be longer then 300", 300)
+                ->post('productName');
+
+            $price = getVal('product_update_')
+                ->type('float')
+                ->condition("req", "This field is required.")
+                ->condition("gte", "Price has to be at least 0.01", 0.01)
+                ->post('price');
+
+            $category = getVal('product_update_')
+                ->type('string')
+                ->condition("eq", "Category is invalid.", array_values($formattedCategory))
+                ->post('category');
+
+            $productId = getVal('product_update_')
+                ->type('string')
+                ->post('productId');
+
+            $data += ['productName' => $productName];
+            $data += ['productId' => $productId];
+            $data += ['price' => $price];
+            $data += ['category' => $category];
+
+            if (getVal('product_update_')->messageList->errorCount === 0) {
+                if ($this->productModel->updateProduct($data)) {
+                    header("LOCATION: /products");
+                } else {
+                    getLog('db')->error('Something went wrong updating a product.');
+                }
+            }
+        } else {
+            $formattedCategory = [];
+
+            foreach ($this->productModel->getCategories() as $category) {
+                $formattedCategory[] = $category->CategoryId;
+            }
+
+            $product = $this->productModel->getProduct($id);
+
+            $data += ['productName' => $product->ProductName];
+            $data += ['productId' => $product->ProductId];
+            $data += ['price' => $product->Price];
+            $data += ['category' => $product->Category];
+
+
+        }
+
+
+        $this->view('products/update', $data);
     }
 
     public function delete($id)
