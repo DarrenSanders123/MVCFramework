@@ -160,5 +160,4 @@ class Products extends Controller
             header('LOCATION: /products');
         }
     }
-
 }
