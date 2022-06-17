@@ -12,13 +12,18 @@ class ProductsModel
         $this->databaseObj = new \Database();
     }
 
-    public function getCategories(): array
+    /**
+     * Returns the categories from the database.
+     * @return array|bool
+     */
+    public function getCategories(): array|bool
     {
         try {
             $this->databaseObj->query('SELECT * FROM category');
             return $this->databaseObj->resultSet();
         } catch (PDOException $exception) {
             getLog('database')->error('Message: '. $exception->getMessage());
+            return false;
         }
     }
 
