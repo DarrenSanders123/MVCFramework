@@ -1,0 +1,7 @@
+{
+    "require": {
+        "eftec/validationone": "^2.4",
+        "monolog/monolog": "^2.7",
+        "ext-pdo": "*"
+    }
+}
