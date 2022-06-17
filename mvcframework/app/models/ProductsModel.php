@@ -49,7 +49,7 @@ class ProductsModel
     public function getProducts($page): array|bool
     {
         try {
-            $min = $page - 1;
+            $min = $page * 10 - 10;
             $max = $page * 10;
             $this->databaseObj->query('
         SELECT 
