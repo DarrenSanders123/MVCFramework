@@ -154,8 +154,6 @@ class Products extends Controller
             $data += ['productId' => $product->ProductId];
             $data += ['price' => $product->Price];
             $data += ['category' => $product->Category];
-
-
         }
 
 
@@ -169,5 +167,4 @@ class Products extends Controller
             header('LOCATION: /products');
         }
     }
-
 }
