@@ -11,7 +11,6 @@ require_once 'libraries/Core.php';
 require_once 'libraries/Controller.php';
 require_once 'libraries/Database.php';
 
-
 function getVal($prefix=''): ValidationOne
 {
     global $validation;
