@@ -11,6 +11,11 @@ require_once 'libraries/Core.php';
 require_once 'libraries/Controller.php';
 require_once 'libraries/Database.php';
 
+/**
+ * Get the validator
+ * @param $prefix
+ * @return ValidationOne
+ */
 function getVal($prefix=''): ValidationOne
 {
     global $validation;
@@ -20,6 +25,11 @@ function getVal($prefix=''): ValidationOne
     return $validation;
 }
 
+/**
+ * Get the logger or create a new one if non exist
+ * @param $name
+ * @return \Monolog\Logger
+ */
 function getLog($name=''): Monolog\Logger {
     global $logger;
     if ($logger===null) {

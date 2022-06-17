@@ -7,12 +7,19 @@ class Products extends Controller
 {
     public mixed $productModel;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->productModel = $this->model('ProductsModel');
     }
 
-    public function index()
+    /**
+     * Index page
+     * @return void
+     */
+    public function index(): void
     {
         $productsFormatted = "";
         $products = $this->productModel->getProducts($_GET['page'] ?? '1');
@@ -49,7 +56,11 @@ class Products extends Controller
         $this->view('products/index', $data);
     }
 
-    public function create()
+    /**
+     * Create a new product
+     * @return void
+     */
+    public function create(): void
     {
         $data = [
             'categories' => $this->productModel->getCategories()
@@ -95,7 +106,12 @@ class Products extends Controller
         $this->view('products/create', $data);
     }
 
-    public function update($id)
+    /**
+     * Update a product
+     * @param $id
+     * @return void
+     */
+    public function update($id): void
     {
         $data = [
             'categories' => $this->productModel->getCategories()
@@ -153,7 +169,12 @@ class Products extends Controller
         $this->view('products/update', $data);
     }
 
-    public function delete($id)
+    /**
+     * Delete a product
+     * @param $id
+     * @return void
+     */
+    public function delete($id): void
     {
         $result = $this->productModel->deleteProduct($id);
         if ($result) {

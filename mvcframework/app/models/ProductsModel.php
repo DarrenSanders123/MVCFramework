@@ -27,6 +27,11 @@ class ProductsModel
         }
     }
 
+    /**
+     * Get a single product with the given id.
+     * @param $id
+     * @return stdClass|bool
+     */
     public function getProduct($id): stdClass|bool
     {
         try {
