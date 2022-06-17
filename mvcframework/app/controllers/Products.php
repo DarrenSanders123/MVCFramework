@@ -67,6 +67,7 @@ class Products extends Controller
             $productName = getVal('product_create_')
                 ->type('string')
                 ->condition("minlen", "Product name has to be at least 3 characters long.", 3)
+                ->condition("maxlen", "Product name cant be longer then 300", 300)
                 ->post('productName');
 
             $price = getVal('product_create_')
@@ -88,7 +89,7 @@ class Products extends Controller
                 if ($this->productModel->createProduct($data)) {
                     header("LOCATION: /products");
                 } else {
-                    getVal('db_')->messageList->addItem('database', 'Something went wrong creating a product.', 'error');
+                    getLog('db')->error('Something went wrong creating a product.');
                 }
             }
         }

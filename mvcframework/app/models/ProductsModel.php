@@ -12,7 +12,8 @@ class ProductsModel
         $this->databaseObj = new \Database();
     }
 
-    public function getCategories(): array {
+    public function getCategories(): array
+    {
         $this->databaseObj->query('SELECT * FROM category');
         return $this->databaseObj->resultSet();
     }
@@ -22,11 +23,12 @@ class ProductsModel
      * @param $page
      * @return array
      */
-    public function getProducts($page): array
+    public function getProducts($page): array|bool
     {
-        $min = $page - 1;
-        $max = $page * 10;
-        $this->databaseObj->query('
+        try {
+            $min = $page - 1;
+            $max = $page * 10;
+            $this->databaseObj->query('
         SELECT 
             products.ProductId,
             products.ProductName,
@@ -34,18 +36,40 @@ class ProductsModel
             c.CategoryName as Category
         FROM products
             INNER JOIN price p on ProductPriceId = p.PriceId
-            LEFT JOIN category c on ProductCategoryId = c.CategoryId 
+            INNER JOIN category c on ProductCategoryId = c.CategoryId 
         LIMIT :min, :max
         ');
-        $this->databaseObj->bind(':min', $min);
-        $this->databaseObj->bind(':max', $max);
+            $this->databaseObj->bind(':min', $min);
+            $this->databaseObj->bind(':max', $max);
 
-        return $this->databaseObj->resultSet();
+            return $this->databaseObj->resultSet();
+        } catch (PDOException $exception) {
+            getLog('db')->error('Message: ' . $exception->getMessage() . '\n in: ' . $exception->getFile());
+            return false;
+        }
     }
 
     public function updateProduct($data): string|bool
     {
+        try {
+            $this->databaseObj->query(/** @lang MySQL */ '
+                START TRANSACTION;
+                UPDATE products 
+                INNER JOIN price p on products.ProductPriceId = p.PriceId
+                SET ProductName = :ProductName, ProductCategoryId = :CategoryId, p.Price = :Price;
+                COMMIT;
+            ');
 
+            $this->databaseObj->bind(':ProductName', $data['productName']);
+            $this->databaseObj->bind(':CategoryId', $data['category']);
+            $this->databaseObj->bind(':Price', $data['price']);
+
+            $this->databaseObj->execute();
+            return true;
+        } catch (PDOException $exception) {
+            getLog('db')->error('Message: ' . $exception->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -71,7 +95,8 @@ class ProductsModel
             $this->databaseObj->execute();
 
             return true;
-        } catch (PDOException) {
+        } catch (PDOException $exception) {
+            getLog('db')->error('Message: ' . $exception->getMessage() . '\n in: ' . $exception->getFile());
             return false;
         }
     }
@@ -85,23 +110,20 @@ class ProductsModel
     public function deleteProduct($id): bool
     {
         try {
-            // geef mij het price id van de product die ik ga verwijderen.
-            $this->databaseObj->query("SELECT ProductPriceId FROM products WHERE ProductId = :id");
-            $this->databaseObj->bind(':id', $id);
+            $this->databaseObj->query(/** @lang MySQL */ '
+                    START TRANSACTION;
+                    DELETE products, p
+                        FROM products
+                            INNER JOIN price p on products.ProductPriceId = p.PriceId
+                        WHERE ProductId = :ProductId;
+                    COMMIT;
+                    ');
 
-            // cast price_id from select query to this value.
-            $PriceId = $this->databaseObj->single()->ProductPriceId;
-
-            $this->databaseObj->query('DELETE FROM products WHERE ProductId = :id');
-            $this->databaseObj->bind(':id', $id);
-            $this->databaseObj->execute();
-
-            $this->databaseObj->query('DELETE FROM price WHERE PriceId = :id');
-            $this->databaseObj->bind(':id', $PriceId);
+            $this->databaseObj->bind(':ProductId', $id);
             $this->databaseObj->execute();
             return true;
-        } catch (PDOException $e) {
-            error_log('Error with deleting product: \n ' . $e, LOG_CRIT);
+        } catch (PDOException $exception) {
+            getLog('db')->error('Message: ' . $exception->getMessage());
             return false;
         }
     }

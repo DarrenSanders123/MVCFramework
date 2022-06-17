@@ -18,5 +18,13 @@ function getVal($prefix=''): ValidationOne
     return $validation;
 }
 
+function getLog($name=''): Monolog\Logger {
+    global $logger;
+    if ($logger===null) {
+        $logger=new \Monolog\Logger($name);
+    }
+    return $logger;
+}
+
 //Instantiate core class
 $init = new Core();
