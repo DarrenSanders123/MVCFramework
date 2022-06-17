@@ -14,8 +14,12 @@ class ProductsModel
 
     public function getCategories(): array
     {
-        $this->databaseObj->query('SELECT * FROM category');
-        return $this->databaseObj->resultSet();
+        try {
+            $this->databaseObj->query('SELECT * FROM category');
+            return $this->databaseObj->resultSet();
+        } catch (PDOException $exception) {
+            getLog('database')->error('Message: '. $exception->getMessage());
+        }
     }
 
     public function getProduct($id): stdClass|bool
