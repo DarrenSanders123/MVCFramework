@@ -1,5 +1,4 @@
 <form method="post">
-    <input hidden type="number" value="<?= $data['productId']; ?>" name="product_create_productId">
     <label>Product name<br>
         <input type="text" name="product_create_productName" value="<?= $data['productName'] ?? "" ?>"
                placeholder="Enter a product name."/><br>
