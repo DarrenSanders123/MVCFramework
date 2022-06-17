@@ -21,7 +21,7 @@ class ProductsModel
     /**
      * return all the products from the database
      * @param $page
-     * @return array
+     * @return array|bool
      */
     public function getProducts($page): array|bool
     {
@@ -49,6 +49,11 @@ class ProductsModel
         }
     }
 
+    /**
+     * Update a product
+     * @param $data
+     * @return string|bool
+     */
     public function updateProduct($data): string|bool
     {
         try {
