@@ -10,7 +10,11 @@ class Pages extends Controller
         //$this->userModel = $this->model('User');
     }
 
-    public function index()
+    /**
+     * index of the home page
+     * @return void
+     */
+    public function index(): void
     {
         $data = [
             'title' => 'Home page'
