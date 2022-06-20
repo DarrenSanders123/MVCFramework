@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+actor Gast
+actor Leerling
+actor Instructor
+actor Rijschoolhouder
+actor Eigenaar
+
+Gast --> (Login)
+
+(Login) --> Leerling
+(Login) --> Rijschoolhouder
+(Login) --> Instructor
+(Login) --> Eigenaar
+
+rectangle LeerlingenWerven {
+    (Gast) ---> (Informatie Verzoek)
+    (Gast) ---> (Algemeene informatie)
+}
+
+rectangle LeerlingService {
+    Leerling --> (Overzicht)
+    (Overzicht) --> (Rijlessen)
+    (Overzicht) --> (Meldingen)
+    (Rijlessen) -left-> (Informatie)
+}
+
+rectangle instructeursService {
+    instructeursService --> (Mededelingen)
+    instructeursService --> (Profiel pagina)
+    instructeursService --> (Calender)
+    (Calender) --> (Geplande Rijlessen)
+    (Calender) --> (Formulier om niewe les te plannen)
+    (Formulier om niewe les te plannen) -left- ("klantnaam", "datum en tijd", "ophaaladres", "lesdoel")
+}
+
+rectangle RijschoolService {
+    RijschoolService --> (Overzicht van instructors)
+    (Overzicht van instructors) --> (ziekmeldingen)
+    (Overzicht van instructors) -- ("NAW-Gegevens", "Persoonlijke gegevens")
+    RijschoolService --> (Overzicht van leerlingen)
+    (Overzicht van leerlingen) --> (ziekmeldingen)
+    (Overzicht van leerlingen) -- ("NAW-Gegevens", "Persoonlijke gegevens.")
+
+    RijschoolService --> (Wagenpark)
+    (Wagenpark) -- ("Merk", "type", "kenteken", "etc")
+
+    RijschoolService --> (Finacien)
+    (Finacien) --> ("omzet", "actieve leerlingen", "slagings percentage")
+
+}
+
+Instructor -> instructeursService
+Rijschoolhouder -> RijschoolService
+
+@enduml
