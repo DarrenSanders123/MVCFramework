@@ -1,4 +1,5 @@
 <?php
+
 //Require libraries from folder libraries
 use eftec\ValidationOne;
 use Monolog\Handler\FirePHPHandler;
@@ -30,7 +31,8 @@ function getVal($prefix=''): ValidationOne
  * @param $name
  * @return \Monolog\Logger
  */
-function getLog($name=''): Monolog\Logger {
+function getLog($name=''): Monolog\Logger
+{
     global $logger;
     if ($logger===null) {
         $logger=new \Monolog\Logger($name);
