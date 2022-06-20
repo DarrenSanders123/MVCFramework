@@ -1,8 +1,8 @@
 {
-    "require": {
-        "eftec/validationone": "^2.4",
-        "monolog/monolog": "^2.7",
-        "ext-pdo": "*",
-        "phpunit/phpunit": "^9.5"
-    }
+  "require": {
+    "eftec/validationone": "^2.4",
+    "monolog/monolog": "^2.7",
+    "ext-pdo": "*",
+    "phpunit/phpunit": "^9.5"
+  }
 }
